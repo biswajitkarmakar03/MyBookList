@@ -8,24 +8,8 @@ class Book {
 
 class UI {  
     static displayBooks() {
-        const StoredBooks = [
-            {
-                title : 'The eyes have it',
-                author: 'Ruskin Bond',
-                isbn: '45644'
-            },
-            {
-                title : 'The eyes have it',
-                author: 'Ruskin Bond',
-                isbn: '45644'
-            },
-            {
-                title : 'The eyes have it',
-                author: 'Ruskin Bond',
-                isbn: '45644'
-            },
-        ];
-        const books = StoredBooks;
+    
+        const books = Store.getBooks();
 
         books.forEach((book) => UI.addBookToList(book));
     }
@@ -39,12 +23,72 @@ class UI {
             <td>${book.title}</td>
             <td>${book.author}</td>
             <td>${book.isbn}</td>
-            <td><a href="#" style="background-color : red; color: white; padding: 8px 16px; text-decoration: none; font-family: Arial, sans-serif; border-radius: 3px">DELETE</td>
+            <td><a href="#" class="delete btn btn-danger" >DELETE</td>
         `;
 
         list.appendChild(row);
     }
+
+    static deleteBook(el){
+        if(el.classList.contains('delete')){
+            el.parentElement.parentElement.remove();
+        }
+    }
+//  SHOWING ALERT MESSAGE 
+
+    static showAlert(message, className){
+        const div = document.createElement('div');
+        div.className = `alert alert-${className}`;
+        div.appendChild (document.createTextNode(message));
+        const container = document.querySelector('.container');
+        const form = document.querySelector('#book-form');
+        container.insertBefore(div, form);
+    
+        // Vanish in 3 seconds
+        setTimeout(() => document.querySelector('.alert').remove(), 3000);
+    }
+
+    static clearFields(){
+        document.querySelector('#title').value = ' ';
+        document.querySelector('#author').value = ' ';
+        document.querySelector('#isbn').value = ' ';
+    }
+
 }
+
+// STORE BOOKS 
+
+class Store {
+    static getBooks(){
+        let books;
+        if (localStorage.getItem('books') === null ){
+            books = [];
+        }else{
+            books = JSON.parse(localStorage.getItem('books'));
+        }
+
+        return books;
+    }
+
+    static addBook(book){
+        const books = Store.getBooks();
+        books.push(book);
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+
+    static removeBook(isbn){
+        const  books = Store.getBooks();
+
+        books.forEach((book, index) => {
+            if (book.isbn === isbn){
+                books.splice(index, 1);
+            }
+        });
+
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+} 
+
 
 // DISPLAY BOOKS 
 
@@ -52,4 +96,34 @@ document.addEventListener('DOMContentLoaded', UI.displayBooks);
 
 //  ADD A BOOK
 
-document.querySelector('#my-form')    
+document.querySelector('#book-form').addEventListener('submit', (e) => {
+    
+    e.preventDefault();
+
+    const title = document.querySelector('#title').value;
+    const author = document.querySelector('#author').value;
+    const isbn = document.querySelector('#isbn').value;
+
+    if (title === '' || author === '' || isbn === ''){
+        UI.showAlert('Please fill in all the fields !', 'danger px-5');
+    } else {        
+        const book = new Book (title, author, isbn);
+
+        UI.addBookToList(book);
+
+        Store.addBook(book);
+
+        UI.showAlert('A new book is added !', 'success px-5');
+
+        UI.clearFields();
+
+    }
+});    
+
+document.querySelector('#book-list').addEventListener('click', (e) => {
+    UI.deleteBook(e.target);
+
+    Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
+
+    UI.showAlert('A book is removed !', 'success');
+});
