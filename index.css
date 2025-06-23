@@ -1,8 +1,10 @@
+/* Form */
+
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: Arial, sans-serif;
+        font-family: Arial, sans-serif;
 }
 
 .my-form-list{
@@ -67,7 +69,7 @@ body, html {
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    margin: 20px 0;
+    margin: 30px 0;
 }
 
 .cool-table thead {
