@@ -14,13 +14,6 @@ A personal library and wishlist tracker web application built to help users mana
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- [Haskell Tool Stack](https://docs.haskellstack.org/en/stable/README/) or **GHC + Cabal**
-- SQLite (default) or PostgreSQL/MySQL (optional)
-
 ### Installation Steps
 
 ```bash
