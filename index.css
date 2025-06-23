@@ -56,3 +56,45 @@ body, html {
 .form-btn:hover {
     background-color: #357ae8;
 }
+
+/* Table  */
+
+.cool-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.cool-table thead {
+    background-color: #34495e;
+    color: #ecf0f1;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 14px;
+}
+
+.cool-table th,
+.cool-table td {
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.cool-table tbody tr:hover {
+    background-color: #f0f7ff;
+    transition: 0.2s ease-in-out;
+}
+
+.cool-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.cool-table td {
+    font-size: 15px;
+    color: #2c3e50;
+}
